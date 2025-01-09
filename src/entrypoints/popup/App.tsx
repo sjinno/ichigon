@@ -25,10 +25,15 @@ function App() {
 
   const placeholder = 'What legendary saying or phrase comes to mind?';
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (phrase === '') return;
 
     console.log('shohei - add', phrase);
+
+    try {
+    } catch (error) {
+      console.log('shohei - error', error);
+    }
 
     setPhrase('');
   };
