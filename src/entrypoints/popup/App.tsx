@@ -61,8 +61,8 @@ function App() {
   return (
     <>
       <main className="w-[400px] h-[280px] py-6">
-        <div className="w-[88%] h-[66%] m-auto">
-          <div>
+        <div className="w-[88%] h-full m-auto">
+          <div className="w-full h-[77%]">
             <textarea
               name="phrase"
               id="phrase"
@@ -72,6 +72,8 @@ function App() {
               onChange={(e) => setPhrase(e.target.value)}
               onKeyDown={(e) => e.metaKey && e.key === 'Enter' && handleAdd()}
             />
+          </div>
+          <div>
             <div className="pl-0.5 py-4 flex gap-3 text-base">
               <button
                 className="bg-sky-500 text-neutral-100 py-1 px-5 rounded-[2px]"
@@ -93,6 +95,17 @@ function App() {
               </button>
             </div>
           </div>
+
+          {/* {phrases.length > 0 && (
+            <div>
+              {phrases
+                .slice(-3)
+                .reverse()
+                .map((value, index) => (
+                  <p key={index}>{value}</p>
+                ))}
+            </div>
+          )} */}
         </div>
       </main>
 
