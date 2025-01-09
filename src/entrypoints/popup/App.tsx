@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import './App.css';
 import { addData, fetchData } from './firebase';
 import Modal from './components/modal';
+import './App.css';
 
-export type ShowType = 'list' | 'random' | null;
+type ShowType = 'list' | 'random' | null;
 
 function App() {
   const [phrase, setPhrase] = useState('');
