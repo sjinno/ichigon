@@ -81,7 +81,7 @@ function App() {
             </div>
           </div>
           {phrases.length > 0 && (
-            <div>
+            <div className="pb-4">
               {phrases.map((phrase, key) => (
                 <p key={key} className="pl-1">
                   {key + 1}. {phrase}
