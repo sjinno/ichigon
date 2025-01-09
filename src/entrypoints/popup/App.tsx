@@ -1,33 +1,62 @@
 import { useState } from 'react';
-import reactLogo from '@/assets/react.svg';
-import wxtLogo from '/wxt.svg';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [phrase, setPhrase] = useState('');
+
+  const placeholder = 'What legendary saying or phrase comes to mind?';
+
+  const handleAdd = () => {
+    if (phrase === '') return;
+
+    console.log('shohei - add', phrase);
+
+    setPhrase('');
+  };
+
+  const handleList = () => {
+    console.log('shohei - list');
+  };
+
+  const handleRandom = () => {
+    console.log('shohei - random');
+  };
 
   return (
     <>
-      <div>
-        <a href="https://wxt.dev" target="_blank">
-          <img src={wxtLogo} className="logo" alt="WXT logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>WXT + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the WXT and React logos to learn more
-      </p>
+      <main className="w-[400px] h-[280px] py-6">
+        <div className="w-[88%] h-[66%] m-auto">
+          <textarea
+            name="phrase"
+            id="phrase"
+            placeholder={placeholder}
+            value={phrase}
+            className="w-full h-full text-2xl px-3 py-2 border-solid border-2 border-zinc-200 rounded-md"
+            onChange={(e) => setPhrase(e.target.value)}
+            onKeyDown={(e) => e.metaKey && e.key === 'Enter' && handleAdd()}
+          />
+          <div className="pl-0.5 py-4 flex gap-3 text-base">
+            <button
+              className="bg-sky-500 text-neutral-100 py-1 px-5 rounded-[2px]"
+              onClick={handleAdd}
+            >
+              Add
+            </button>
+            <button
+              className="bg-emerald-500 text-neutral-100 py-1 px-5 rounded-[2px]"
+              onClick={handleList}
+            >
+              List
+            </button>
+            <button
+              className="bg-amber-500 text-neutral-100 py-1 px-5 rounded-[2px]"
+              onClick={handleRandom}
+            >
+              Random
+            </button>
+          </div>
+        </div>
+      </main>
     </>
   );
 }
