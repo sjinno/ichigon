@@ -1,19 +1,28 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 import { addData, fetchData } from './firebase';
+import Modal from './components/modal';
+
+export type ShowType = 'list' | 'random' | null;
 
 function App() {
   const [phrase, setPhrase] = useState('');
   const [phrases, setPhrases] = useState<string[]>([]);
+  const [show, setShow] = useState<ShowType>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [randomPhrase, setRandomPhrase] = useState('');
 
   useEffect(() => {
     // Load phrases from db
     async function fetchPhrases() {
+      setIsLoading(true);
       try {
         const data = await fetchData();
         setPhrases(data);
       } catch (error) {
         console.error('Error fetching phrases:', error);
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -25,25 +34,21 @@ function App() {
   const handleAdd = async () => {
     if (phrase === '') return;
 
-    console.log('shohei - add', phrase);
-
     try {
       await addData(phrase);
       setPhrases((prev) => [...prev, phrase]);
     } catch (error) {
-      console.log('shohei - error', error);
+      console.error(error);
     }
 
     setPhrase('');
   };
 
-  const handleList = () => {
-    console.log('shohei - list');
+  const toggleModal = (type: ShowType) => {
+    setShow((prev) => (prev === type ? null : type));
   };
 
-  const handleRandom = () => {
-    console.log('shohei - random');
-  };
+  const closeModal = () => setShow(null);
 
   return (
     <>
@@ -68,29 +73,57 @@ function App() {
               </button>
               <button
                 className="bg-emerald-500 text-neutral-100 py-1 px-5 rounded-[2px]"
-                onClick={handleList}
+                onClick={() => toggleModal('list')}
               >
                 List
               </button>
               <button
                 className="bg-amber-500 text-neutral-100 py-1 px-5 rounded-[2px]"
-                onClick={handleRandom}
+                onClick={() => {
+                  const phrase =
+                    phrases.length > 0
+                      ? phrases[Math.floor(Math.random() * phrases.length)]
+                      : '';
+                  if (phrase === '') return;
+                  setRandomPhrase(phrase);
+                  toggleModal('random');
+                }}
               >
                 Random
               </button>
             </div>
           </div>
-          {phrases.length > 0 && (
-            <div className="pb-4">
-              {phrases.map((phrase, key) => (
-                <p key={key} className="pl-1">
-                  {key + 1}. {phrase}
-                </p>
-              ))}
-            </div>
+          {isLoading ? (
+            <p>Loading phrases...</p>
+          ) : (
+            phrases.length > 0 && (
+              <div className="pb-4">
+                {phrases.map((phrase, key) => (
+                  <p key={key} className="pl-1">
+                    {key + 1}. {phrase}
+                  </p>
+                ))}
+              </div>
+            )
           )}
         </div>
       </main>
+
+      <Modal isOpen={show === 'list'} onClose={closeModal}>
+        <>
+          <h2>List of Phrases</h2>
+          {phrases.map((phrase, index) => (
+            <p key={index}>{phrase}</p>
+          ))}
+        </>
+      </Modal>
+
+      <Modal isOpen={show === 'random'} onClose={closeModal}>
+        <>
+          <h2>Random Phrase</h2>
+          <p>{randomPhrase || 'No phrases available'}</p>
+        </>
+      </Modal>
     </>
   );
 }
