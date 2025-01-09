@@ -98,7 +98,7 @@ function App() {
 
       <Modal isOpen={show === 'list'} onClose={closeModal}>
         <>
-          <h2>List of Phrases</h2>
+          <h2 className="text-base">List of Phrases</h2>
           {phrases.map((phrase, index) => (
             <p key={index}>{phrase}</p>
           ))}
@@ -107,7 +107,7 @@ function App() {
 
       <Modal isOpen={show === 'random'} onClose={closeModal}>
         <>
-          <h2>Random Phrase</h2>
+          <h2 className="text-base">Random Phrase</h2>
           <p>{randomPhrase || 'No phrases available'}</p>
         </>
       </Modal>
