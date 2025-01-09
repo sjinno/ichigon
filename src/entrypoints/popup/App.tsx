@@ -95,17 +95,6 @@ function App() {
               Random
             </button>
           </div>
-
-          {/* {phrases.length > 0 && (
-            <div>
-              {phrases
-                .slice(-3)
-                .reverse()
-                .map((value, index) => (
-                  <p key={index}>{value}</p>
-                ))}
-            </div>
-          )} */}
         </div>
       </main>
 
