@@ -11,11 +11,11 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
   return (
     <div
-      className="fixed inset-0 w-full h-full bg-black flex justify-center items-center bg-opacity-15"
+      className="fixed inset-0 w-full h-full bg-zinc-600 bg-opacity-60 flex justify-center items-center"
       onClick={onClose}
     >
       <div
-        className="w-[90%] h-[90%] bg-blue-600 text-white p-6 overflow-auto rounded-lg"
+        className="w-[76%] h-[76%] bg-white text-black p-6 overflow-auto rounded-lg"
         onClick={(e) => e.stopPropagation()}
       >
         {children}
