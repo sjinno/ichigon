@@ -43,6 +43,7 @@ function App() {
   };
 
   const handleRandom = () => {
+    if (phrases.length === 0) return;
     const phrase =
       phrases.length > 0
         ? phrases[Math.floor(Math.random() * phrases.length)]
@@ -60,40 +61,39 @@ function App() {
 
   return (
     <>
-      <main className="w-[400px] h-[280px] py-6">
-        <div className="w-[88%] h-full m-auto">
-          <div className="w-full h-[77%]">
-            <textarea
-              name="phrase"
-              id="phrase"
-              placeholder={placeholder}
-              value={phrase}
-              className="w-full h-full text-2xl px-3 py-2 border-solid border-2 border-zinc-200 rounded-md"
-              onChange={(e) => setPhrase(e.target.value)}
-              onKeyDown={(e) => e.metaKey && e.key === 'Enter' && handleAdd()}
-            />
-          </div>
-          <div>
-            <div className="pl-0.5 py-4 flex gap-3 text-base">
-              <button
-                className="bg-sky-500 text-neutral-100 py-1 px-5 rounded-[2px]"
-                onClick={handleAdd}
-              >
-                Add
-              </button>
-              <button
-                className="bg-emerald-500 text-neutral-100 py-1 px-5 rounded-[2px]"
-                onClick={() => toggleModal('list')}
-              >
-                List
-              </button>
-              <button
-                className="bg-amber-500 text-neutral-100 py-1 px-5 rounded-[2px]"
-                onClick={handleRandom}
-              >
-                Random
-              </button>
-            </div>
+      <main className="w-[600px] h-[400px] py-10">
+        <div className="w-[76%] h-full m-auto">
+          <textarea
+            name="phrase"
+            id="phrase"
+            placeholder={placeholder}
+            value={phrase}
+            className="w-full h-[76%] text-sm px-3 py-2 border-solid border-[1px] border-zinc-200 rounded-md focus:border-[1px] focus:outline-none focus:border-blue-600"
+            onChange={(e) => setPhrase(e.target.value)}
+            onKeyDown={(e) => e.metaKey && e.key === 'Enter' && handleAdd()}
+          />
+          <div className="pl-0.5 py-5 flex gap-3 text-base">
+            <button
+              className="bg-sky-500 text-white py-1 px-4 text-xs rounded-md"
+              onClick={handleAdd}
+            >
+              Add
+            </button>
+            <button
+              className="bg-emerald-500 text-white py-1 px-4 text-xs rounded-md"
+              onClick={() => {
+                if (phrases.length === 0) return;
+                toggleModal('list');
+              }}
+            >
+              List
+            </button>
+            <button
+              className="bg-amber-500 text-white py-1 px-4 text-xs rounded-md"
+              onClick={handleRandom}
+            >
+              Random
+            </button>
           </div>
 
           {/* {phrases.length > 0 && (
