@@ -6,6 +6,8 @@ import {
   connectFirestoreEmulator,
   addDoc,
   collection,
+  getDocs,
+  serverTimestamp,
 } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -45,9 +47,17 @@ const auth = getAuth(app);
 export { db, auth };
 
 // Add a document
-export async function addData() {
-  const docRef = await addDoc(collection(db, 'myCollection'), {
-    name: 'John Doe',
+export async function addData(phrase: string) {
+  const docRef = await addDoc(collection(db, 'phrases'), {
+    phrase,
+    createdAt: serverTimestamp(),
   });
   console.log('Document written with ID:', docRef.id);
+}
+
+// Fetch documents
+export async function fetchData(): Promise<string[]> {
+  const querySnapshot = await getDocs(collection(db, 'phrases'));
+  const data = querySnapshot.docs.map((doc) => doc.data().phrase);
+  return data;
 }
