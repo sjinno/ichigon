@@ -1,8 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
   const [phrase, setPhrase] = useState('');
+  const [phrases, setPhrases] = useState([]);
+
+  useEffect(() => {
+    // Load phrases from db
+    async function fetchPhrases() {
+      // try {
+      //   const querySnapshot = await getDocs(collection(db, 'phrases')); // Replace 'phrases' with your collection name
+      //   const phrases = querySnapshot.docs.map((doc) => ({
+      //     id: doc.id,
+      //     ...doc.data(),
+      //   }));
+      //   setPhrases(phrases);
+      // } catch (error) {
+      //   console.error('Error fetching phrases:', error);
+      // }
+    }
+
+    fetchPhrases();
+  }, []);
 
   const placeholder = 'What legendary saying or phrase comes to mind?';
 
