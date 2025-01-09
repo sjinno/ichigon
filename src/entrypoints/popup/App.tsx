@@ -9,20 +9,18 @@ function App() {
   const [phrase, setPhrase] = useState('');
   const [phrases, setPhrases] = useState<string[]>([]);
   const [show, setShow] = useState<ShowType>();
-  const [isLoading, setIsLoading] = useState(false);
   const [randomPhrase, setRandomPhrase] = useState('');
 
   useEffect(() => {
     // Load phrases from db
     async function fetchPhrases() {
-      setIsLoading(true);
       try {
         const data = await fetchData();
         setPhrases(data);
       } catch (error) {
         console.error('Error fetching phrases:', error);
       } finally {
-        setIsLoading(false);
+        console.log('Done fetching phrases');
       }
     }
 
@@ -42,6 +40,16 @@ function App() {
     }
 
     setPhrase('');
+  };
+
+  const handleRandom = () => {
+    const phrase =
+      phrases.length > 0
+        ? phrases[Math.floor(Math.random() * phrases.length)]
+        : '';
+    if (phrase === '') return;
+    setRandomPhrase(phrase);
+    toggleModal('random');
   };
 
   const toggleModal = (type: ShowType) => {
@@ -79,33 +87,12 @@ function App() {
               </button>
               <button
                 className="bg-amber-500 text-neutral-100 py-1 px-5 rounded-[2px]"
-                onClick={() => {
-                  const phrase =
-                    phrases.length > 0
-                      ? phrases[Math.floor(Math.random() * phrases.length)]
-                      : '';
-                  if (phrase === '') return;
-                  setRandomPhrase(phrase);
-                  toggleModal('random');
-                }}
+                onClick={handleRandom}
               >
                 Random
               </button>
             </div>
           </div>
-          {isLoading ? (
-            <p>Loading phrases...</p>
-          ) : (
-            phrases.length > 0 && (
-              <div className="pb-4">
-                {phrases.map((phrase, key) => (
-                  <p key={key} className="pl-1">
-                    {key + 1}. {phrase}
-                  </p>
-                ))}
-              </div>
-            )
-          )}
         </div>
       </main>
 
