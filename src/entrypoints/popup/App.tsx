@@ -100,18 +100,26 @@ function App() {
 
       <Modal isOpen={show === 'list'} onClose={closeModal}>
         <>
-          <h2 className="text-base">List of Phrases</h2>
-          {phrases.map((phrase, index) => (
-            <p key={index}>{phrase}</p>
-          ))}
+          <h2 className="text-xs">List of Phrases</h2>
+          <div className="py-2">
+            {phrases.map((phrase, index) => (
+              <p key={index}>
+                {index + 1}. {phrase}
+              </p>
+            ))}
+          </div>
         </>
       </Modal>
 
       <Modal isOpen={show === 'random'} onClose={closeModal}>
-        <>
-          <h2 className="text-base">Random Phrase</h2>
-          <p>{randomPhrase || 'No phrases available'}</p>
-        </>
+        <div className="w-full h-full flex flex-col">
+          <h2 className="h-[20px] text-xs">Random Phrase</h2>
+          <div className="w-full h-full flex justify-center items-center">
+            <p className="text-3xl mb-[28px]">
+              {randomPhrase || 'No phrases available'}
+            </p>
+          </div>
+        </div>
       </Modal>
     </>
   );
