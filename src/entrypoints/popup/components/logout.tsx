@@ -13,7 +13,7 @@ export const Logout = () => {
 
   return (
     <button
-      className="bg-zinc-200 px-2 py-[3px] rounded-md"
+      className="bg-zinc-200 px-2 py-[3px] rounded-md text-xs"
       onClick={handleLogout}
     >
       Logout

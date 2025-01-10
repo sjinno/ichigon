@@ -35,7 +35,7 @@ export const Login = () => {
 
   return (
     <div className="w-[600px] h-[400px] pt-24">
-      <div className="w-[256px] m-auto flex flex-col gap-3 justify-center items-center p-6 border-solid border-[1px] border-black rounded-md">
+      <div className="w-[256px] m-auto flex flex-col gap-3 justify-center items-center p-6 border-solid border-[1px] border-black rounded-md text-xs">
         <div>
           <input
             className="w-full h-[24px] px-3 focus:bg-yellow-200 border-solid border-[1px] border-black"
