@@ -35,10 +35,10 @@ export const Login = () => {
 
   return (
     <div className="w-[600px] h-[400px] pt-24">
-      <div className="w-[256px] m-auto flex flex-col gap-3 justify-center items-center p-6 border-solid border-[1px] border-black rounded-md text-xs">
+      <div className="w-[256px] m-auto flex flex-col gap-3 justify-center items-center p-6 border-solid border border-black rounded-md text-xs">
         <div>
           <input
-            className="w-full h-[28px] px-2 focus:bg-yellow-200 border-solid border-[1px] border-black"
+            className="w-full h-[28px] px-2 focus:bg-yellow-200 border-solid border border-black"
             type="email"
             placeholder="Email"
             value={email}
@@ -51,7 +51,7 @@ export const Login = () => {
         </div>
         <div>
           <input
-            className="w-full h-[28px] px-2 focus:bg-yellow-200 border-solid border-[1px] border-black"
+            className="w-full h-[28px] px-2 focus:bg-yellow-200 border-solid border border-black"
             type="password"
             placeholder="Password"
             value={password}

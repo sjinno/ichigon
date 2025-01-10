@@ -68,7 +68,7 @@ function App() {
             id="phrase"
             placeholder={placeholder}
             value={phrase}
-            className="w-full h-[76%] text-sm px-3 py-2 border-solid border-[1px] border-zinc-200 rounded-md focus:border-[1px] focus:outline-none focus:border-blue-600"
+            className="w-full h-[76%] text-sm px-3 py-2 border-solid border border-zinc-200 rounded-md focus:border focus:outline-none focus:border-blue-600"
             onChange={(e) => setPhrase(e.target.value)}
             onKeyDown={(e) => e.metaKey && e.key === 'Enter' && handleAdd()}
           />
