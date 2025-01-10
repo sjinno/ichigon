@@ -7,6 +7,10 @@ export default defineConfig({
   srcDir: 'src', // default: "."
   outDir: 'dist', // default: ".output",
 
+  manifest: {
+    permissions: ['storage'],
+  },
+
   transformManifest(manifest) {
     manifest.name = 'Ichigon';
   },

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { addData, fetchData } from './firebase';
-import Modal from './components/modal';
+import { Logout, Modal } from './components';
 import './App.css';
 
 type ShowType = 'list' | 'random' | null;
@@ -30,8 +30,6 @@ function App() {
   const placeholder = 'What legendary saying or phrase comes to mind?';
 
   const handleAdd = async () => {
-    if (phrase === '') return;
-
     try {
       await addData(phrase);
       setPhrases((prev) => [...prev, phrase]);
@@ -43,12 +41,10 @@ function App() {
   };
 
   const handleRandom = () => {
-    if (phrases.length === 0) return;
     const phrase =
       phrases.length > 0
         ? phrases[Math.floor(Math.random() * phrases.length)]
         : '';
-    if (phrase === '') return;
     setRandomPhrase(phrase);
     toggleModal('random');
   };
@@ -59,9 +55,11 @@ function App() {
 
   const closeModal = () => setShow(null);
 
+  const error = 'List is empty.';
+
   return (
     <>
-      <main className="w-[600px] h-[400px] py-10">
+      <main className="w-[600px] h-[400px] pt-12 pb-10">
         <div className="w-[76%] h-full m-auto">
           <textarea
             name="phrase"
@@ -81,10 +79,7 @@ function App() {
             </button>
             <button
               className="bg-emerald-500 text-white py-1 px-4 text-xs rounded-md"
-              onClick={() => {
-                if (phrases.length === 0) return;
-                toggleModal('list');
-              }}
+              onClick={() => toggleModal('list')}
             >
               List
             </button>
@@ -107,6 +102,7 @@ function App() {
                 {index + 1}. {phrase}
               </p>
             ))}
+            {phrases.length === 0 && <p className="text-red-600">{error}</p>}
           </div>
         </>
       </Modal>
@@ -115,12 +111,18 @@ function App() {
         <div className="w-full h-full flex flex-col">
           <h2 className="h-[20px] text-xs">Random Phrase</h2>
           <div className="w-full h-full flex justify-center items-center">
-            <p className="text-3xl mb-[28px]">
-              {randomPhrase || 'No phrases available'}
-            </p>
+            {randomPhrase ? (
+              <p className="text-3xl mb-[28px]">{randomPhrase}</p>
+            ) : (
+              <p className="text-red-600">{error}</p>
+            )}
           </div>
         </div>
       </Modal>
+
+      <div className="fixed top-0 right-0 w-[76px] h-[42px] flex justify-center items-center">
+        <Logout />
+      </div>
     </>
   );
 }
