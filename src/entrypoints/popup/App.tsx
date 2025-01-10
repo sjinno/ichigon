@@ -30,13 +30,13 @@ function App() {
   const placeholder = 'What legendary saying or phrase comes to mind?';
 
   const handleAdd = async () => {
+    if (!phrase.trim()) return; // Prevent adding empty or whitespace-only phrases
     try {
       await addData(phrase);
       setPhrases((prev) => [...prev, phrase]);
     } catch (error) {
       console.error(error);
     }
-
     setPhrase('');
   };
 
