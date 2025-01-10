@@ -41,10 +41,12 @@ function App() {
   };
 
   const handleRandom = () => {
-    const phrase =
-      phrases.length > 0
-        ? phrases[Math.floor(Math.random() * phrases.length)]
-        : '';
+    if (phrases.length === 0) {
+      setRandomPhrase('');
+      toggleModal('random');
+      return;
+    }
+    const phrase = phrases[Math.floor(Math.random() * phrases.length)];
     setRandomPhrase(phrase);
     toggleModal('random');
   };
