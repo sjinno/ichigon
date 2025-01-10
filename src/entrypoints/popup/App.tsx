@@ -55,7 +55,7 @@ function App() {
 
   const closeModal = () => setShow(null);
 
-  const error = 'List is empty.';
+  const error = 'List is empty!';
 
   return (
     <>
@@ -98,7 +98,7 @@ function App() {
           <h2 className="text-xs">List of Phrases</h2>
           <div className="py-2">
             {phrases.map((phrase, index) => (
-              <p key={index}>
+              <p key={index} className="pb-1.5 leading-snug">
                 {index + 1}. {phrase}
               </p>
             ))}
@@ -110,13 +110,13 @@ function App() {
       <Modal isOpen={show === 'random'} onClose={closeModal}>
         <div className="w-full h-full flex flex-col">
           <h2 className="h-[20px] text-xs">Random Phrase</h2>
-          <div className="w-full h-full flex justify-center items-center">
-            {randomPhrase ? (
-              <p className="text-3xl mb-[28px]">{randomPhrase}</p>
-            ) : (
-              <p className="text-red-600">{error}</p>
-            )}
-          </div>
+          {randomPhrase ? (
+            <div className="w-full flex grow justify-center items-center">
+              <p className="text-base mb-[28px]">{randomPhrase}</p>
+            </div>
+          ) : (
+            <p className="text-red-600">{error}</p>
+          )}
         </div>
       </Modal>
 
