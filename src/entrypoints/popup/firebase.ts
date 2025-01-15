@@ -4,10 +4,10 @@ import { connectAuthEmulator, getAuth } from 'firebase/auth';
 import {
   getFirestore,
   connectFirestoreEmulator,
-  addDoc,
-  collection,
-  getDocs,
-  serverTimestamp,
+  arrayUnion,
+  doc,
+  updateDoc,
+  getDoc,
 } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -46,18 +46,39 @@ const auth = getAuth(app);
 
 export { db, auth };
 
+interface Item {
+  proverb: string;
+  createdAt: string;
+}
+
+const COLLECTION = import.meta.env.VITE_FIREBASE_COLLECTION;
+const DOCUMENT = import.meta.env.VITE_FIREBASE_DOCUMENT;
+
 // Add a document
-export async function addData(phrase: string) {
-  const docRef = await addDoc(collection(db, 'phrases'), {
-    phrase,
-    createdAt: serverTimestamp(),
-  });
-  console.log('Document written with ID:', docRef.id);
+export async function addData(proverb: string) {
+  const proverbsRef = doc(db, COLLECTION, DOCUMENT);
+  try {
+    await updateDoc(proverbsRef, {
+      list: arrayUnion({ proverb, createdAt: new Date().toLocaleString() }),
+    });
+    console.log('Document updated successfully!');
+  } catch (error) {
+    console.error('Error updating document:', error);
+  }
 }
 
 // Fetch documents
 export async function fetchData(): Promise<string[]> {
-  const querySnapshot = await getDocs(collection(db, 'phrases'));
-  const data = querySnapshot.docs.map((doc) => doc.data().phrase);
+  const proverbsRef = doc(db, COLLECTION, DOCUMENT);
+  const proverbsSnap = await getDoc(proverbsRef);
+
+  const proverbsData = proverbsSnap.data();
+
+  if (!proverbsData) {
+    throw new Error('Data does not exist.');
+  }
+
+  const data = proverbsData.list.map((item: Item) => item.proverb);
+
   return data;
 }
