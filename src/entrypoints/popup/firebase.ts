@@ -46,7 +46,7 @@ const auth = getAuth(app);
 
 export { db, auth };
 
-interface Item {
+interface Entry {
   proverb: string;
   createdAt: string;
 }
@@ -59,7 +59,7 @@ export async function addData(proverb: string) {
   const proverbsRef = doc(db, COLLECTION, DOCUMENT);
   try {
     await updateDoc(proverbsRef, {
-      list: arrayUnion({ proverb, createdAt: new Date().toLocaleString() }),
+      entries: arrayUnion({ proverb, createdAt: new Date().toLocaleString() }),
     });
     console.log('Document updated successfully!');
   } catch (error) {
@@ -78,7 +78,7 @@ export async function fetchData(): Promise<string[]> {
     throw new Error('Data does not exist.');
   }
 
-  const data = proverbsData.list.map((item: Item) => item.proverb);
+  const data = proverbsData.entries.map((entry: Entry) => entry.proverb);
 
   return data;
 }
